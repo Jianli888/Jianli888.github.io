@@ -1,0 +1,56 @@
+.order-instruction {
+  margin: 0 0 4px;
+  color: #65575d;
+}
+
+.order-items {
+  display: grid;
+  gap: 10px;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 1fr 156px;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--ink);
+  background: #fff;
+  padding: 12px 14px;
+}
+
+.order-item > div:first-child {
+  display: grid;
+}
+
+.order-item span {
+  color: #65575d;
+  font-size: .8rem;
+}
+
+.order-item .quantity-control {
+  min-height: 44px;
+  padding: 0;
+  grid-template-columns: 42px 1fr 42px;
+}
+
+.order-item .quantity-control input {
+  min-width: 0;
+}
+
+.whatsapp-link.is-disabled {
+  opacity: .48;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .order-item {
+    grid-template-columns: 1fr 132px;
+    padding: 10px;
+  }
+
+  .order-item .quantity-control {
+    grid-template-columns: 36px 1fr 36px;
+  }
+}

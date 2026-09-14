@@ -1,25 +1,40 @@
 const WHATSAPP_NUMBER = '0782471688';
 
 const dialog = document.querySelector('#order-dialog');
-const product = document.querySelector('#product');
-const quantity = document.querySelector('#quantity');
+const orderItems = [...document.querySelectorAll('.order-item')];
 const total = document.querySelector('#total');
 const whatsapp = document.querySelector('#whatsapp-link');
 
 function updateOrder() {
-  const option = product.options[product.selectedIndex];
-  const qty = Math.max(1, Math.min(20, Number(quantity.value) || 1));
-  quantity.value = qty;
-  const amount = (Number(option.dataset.price) * qty).toFixed(2);
-  total.textContent = `CHF ${amount}`;
-  const message = `Hello Jian! I would like to order ${qty} × ${option.value} (CHF ${amount}, before delivery). My name and delivery address are: `;
+  const selections = orderItems.map(item => {
+    const input = item.querySelector('input');
+    const quantity = Math.max(0, Math.min(20, Number(input.value) || 0));
+    input.value = quantity;
+    return { name: item.dataset.product, price: Number(item.dataset.price), quantity };
+  }).filter(item => item.quantity > 0);
+  const amount = selections.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  total.textContent = `CHF ${amount.toFixed(2)}`;
+
+  if (!selections.length) {
+    whatsapp.href = '#';
+    whatsapp.classList.add('is-disabled');
+    whatsapp.setAttribute('aria-disabled', 'true');
+    whatsapp.textContent = 'Choose at least one jar';
+    return;
+  }
+
+  const lines = selections.map(item => `${item.quantity} × ${item.name} — CHF ${(item.price * item.quantity).toFixed(2)}`);
+  const message = `Hello Jian! I would like to order:\n${lines.join('\n')}\n\nTotal: CHF ${amount.toFixed(2)} before delivery.\nMy name and delivery address are: `;
   whatsapp.href = `https://wa.me/41${WHATSAPP_NUMBER.slice(1)}?text=${encodeURIComponent(message)}`;
+  whatsapp.classList.remove('is-disabled');
+  whatsapp.removeAttribute('aria-disabled');
+  whatsapp.innerHTML = 'Continue on WhatsApp <span>↗</span>';
 }
 
 function openOrder(selectedProduct) {
   if (selectedProduct) {
-    const match = [...product.options].find(option => option.value === selectedProduct);
-    if (match) match.selected = true;
+    const match = orderItems.find(item => item.dataset.product === selectedProduct);
+    if (match) match.querySelector('input').value = 1;
   }
   updateOrder();
   dialog.showModal();
@@ -29,8 +44,10 @@ document.querySelectorAll('.js-open-order').forEach(button => button.addEventLis
 document.querySelectorAll('.js-buy').forEach(button => button.addEventListener('click', () => openOrder(button.dataset.product)));
 document.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
-product.addEventListener('change', updateOrder);
-quantity.addEventListener('input', updateOrder);
-document.querySelector('#qty-minus').addEventListener('click', () => { quantity.value = Math.max(1, Number(quantity.value) - 1); updateOrder(); });
-document.querySelector('#qty-plus').addEventListener('click', () => { quantity.value = Math.min(20, Number(quantity.value) + 1); updateOrder(); });
+orderItems.forEach(item => {
+  const input = item.querySelector('input');
+  input.addEventListener('input', updateOrder);
+  item.querySelector('[data-action="minus"]').addEventListener('click', () => { input.value = Math.max(0, Number(input.value) - 1); updateOrder(); });
+  item.querySelector('[data-action="plus"]').addEventListener('click', () => { input.value = Math.min(20, Number(input.value) + 1); updateOrder(); });
+});
 updateOrder();

@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff4ca6'/%3E%3Cpath d='M42 12c-1 9-5 13-10 17-8 6-11 13-9 22 11 1 19-5 24-14 4-7 4-15-5-25Z' fill='%23ff332f' stroke='%231d1719' stroke-width='3'/%3E%3Cpath d='M42 12c3 0 6 2 8 5' fill='none' stroke='%236ebd45' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="order.css">
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -120,16 +121,23 @@
     <button class="dialog-close" type="button" aria-label="Close order window">×</button>
     <div class="order-dialog__head"><p class="eyebrow">Order direct</p><h2 id="order-title">Your chili,<br>one step away.</h2></div>
     <form id="order-form">
-      <label for="product">Choose a jar</label>
-      <select id="product" name="product">
-        <option value="The Explorer — 50g" data-price="5.28">The Explorer — 50g · CHF 5.28</option>
-        <option value="The Friend — 125g" data-price="10.68" selected>The Friend — 125g · CHF 10.68</option>
-        <option value="The Lover — 190g" data-price="15.18">The Lover — 190g · CHF 15.18</option>
-      </select>
-      <label for="quantity">Quantity</label>
-      <div class="quantity-control"><button id="qty-minus" type="button" aria-label="Decrease quantity">−</button><input id="quantity" name="quantity" type="number" min="1" max="20" value="1"><button id="qty-plus" type="button" aria-label="Increase quantity">+</button></div>
-      <div class="order-total"><span>Total before delivery</span><strong id="total">CHF 10.68</strong></div>
-      <a class="button button--full whatsapp-link" id="whatsapp-link" href="#" target="_blank" rel="noopener" style="text-decoration:none;margin-top:0">Continue on WhatsApp <span>↗</span></a>
+      <p class="order-instruction">Choose any combination of jars.</p>
+      <div class="order-items">
+        <div class="order-item" data-product="The Explorer — 50g" data-price="5.28">
+          <div><strong>The Explorer · 50g</strong><span>CHF 5.28 each</span></div>
+          <div class="quantity-control"><button type="button" data-action="minus" aria-label="Decrease 50g quantity">−</button><input name="quantity-50" type="number" min="0" max="20" value="0" aria-label="50g jar quantity"><button type="button" data-action="plus" aria-label="Increase 50g quantity">+</button></div>
+        </div>
+        <div class="order-item" data-product="The Friend — 125g" data-price="10.68">
+          <div><strong>The Friend · 125g</strong><span>CHF 10.68 each</span></div>
+          <div class="quantity-control"><button type="button" data-action="minus" aria-label="Decrease 125g quantity">−</button><input name="quantity-125" type="number" min="0" max="20" value="0" aria-label="125g jar quantity"><button type="button" data-action="plus" aria-label="Increase 125g quantity">+</button></div>
+        </div>
+        <div class="order-item" data-product="The Lover — 190g" data-price="15.18">
+          <div><strong>The Lover · 190g</strong><span>CHF 15.18 each</span></div>
+          <div class="quantity-control"><button type="button" data-action="minus" aria-label="Decrease 190g quantity">−</button><input name="quantity-190" type="number" min="0" max="20" value="0" aria-label="190g jar quantity"><button type="button" data-action="plus" aria-label="Increase 190g quantity">+</button></div>
+        </div>
+      </div>
+      <div class="order-total"><span>Total before delivery</span><strong id="total">CHF 0.00</strong></div>
+      <a class="button button--full whatsapp-link is-disabled" id="whatsapp-link" href="#" target="_blank" rel="noopener" aria-disabled="true" style="text-decoration:none;margin-top:0">Choose at least one jar</a>
       <p class="payment-note">WhatsApp will open with your order details ready to send. We’ll confirm availability, delivery or pickup, and payment with you in the chat.</p>
     </form>
   </dialog>
