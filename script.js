@@ -33,5 +33,4 @@ product.addEventListener('change', updateOrder);
 quantity.addEventListener('input', updateOrder);
 document.querySelector('#qty-minus').addEventListener('click', () => { quantity.value = Math.max(1, Number(quantity.value) - 1); updateOrder(); });
 document.querySelector('#qty-plus').addEventListener('click', () => { quantity.value = Math.min(20, Number(quantity.value) + 1); updateOrder(); });
-document.querySelector('#year').textContent = new Date().getFullYear();
 updateOrder();
