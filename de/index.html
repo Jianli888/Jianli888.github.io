@@ -20,13 +20,14 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../order.css">
+  <link rel="stylesheet" href="../reviews.css">
   <script src="../script.js" defer></script>
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="Jian’s Chili Startseite"><img src="../assets/jians-chili-logo.png" alt="Jian’s Chili"></a>
-    <nav aria-label="Hauptnavigation"><a href="#story">Unsere Geschichte</a><a href="#shop">Shop</a><a href="#ingredients">Zutaten</a></nav>
-   <div class="language-switch" aria-label="Sprache"> <a href="/">EN</a> <span>/</span><a href="/de/" aria-current="page">DE</a></div>
+    <nav aria-label="Hauptnavigation"><a href="#story">Unsere Geschichte</a><a href="#shop">Shop</a><a href="#ingredients">Zutaten</a><a href="#reviews">Stimmen</a></nav>
+    <div class="language-switch" aria-label="Sprache"><a href="/">EN</a><span>/</span><a href="/de/" aria-current="page">DE</a></div>
     <button class="button button--small js-open-order" type="button">Jetzt bestellen</button>
   </header>
 
@@ -60,6 +61,14 @@
     </section>
 
     <section class="ingredients section" id="ingredients"><div class="ingredients__title"><p class="eyebrow">In jedem Glas</p><h2>Ehrliche Zutaten.<br>Voller Geschmack.</h2></div><ul><li><span>01</span>Frische Chili</li><li><span>02</span>Knoblauch & Ingwer</li><li><span>03</span>Rote Zwiebel</li><li><span>04</span>Rosmarin</li><li><span>05</span>Grünes Sichuan-Pfefferöl</li><li><span>06</span>Sesam- & Olivenöl</li></ul></section>
+    <section class="reviews section" id="reviews">
+      <div class="section-heading reviews__heading"><div><p class="eyebrow">Von unseren Kundinnen und Kunden</p><h2>Liebe auf den ersten Biss.</h2></div><p>Echte Nachrichten von Menschen, die Jian’s Chili probiert haben.</p></div>
+      <div class="review-grid">
+        <blockquote class="review-card review-card--pink"><span aria-hidden="true">“</span><p>Beste Chilisauce überhaupt!</p><footer>Eine begeisterte Kundin</footer></blockquote>
+        <blockquote class="review-card review-card--dark"><span aria-hidden="true">“</span><p>Bitte bewahrt dieses Rezept für die Nachwelt auf – ich weiss nicht, was ich tun würde, wenn es diese Sauce nicht mehr gäbe.</p><footer>Kundennachricht</footer></blockquote>
+        <blockquote class="review-card review-card--acid"><span aria-hidden="true">“</span><p>Wir haben heute mit deiner Chilisauce Pasta gemacht. Es war unglaublich lecker.</p><footer>Kundennachricht</footer></blockquote>
+      </div>
+    </section>
     <section class="final-cta section"><p class="eyebrow">Bereit?</p><h2>Mehr Geschmack.</h2><button class="button button--light js-open-order" type="button">Über WhatsApp bestellen <span aria-hidden="true">↗</span></button></section>
   </main>
 
@@ -82,4 +91,3 @@
   </dialog>
 </body>
 </html>
-
