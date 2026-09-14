@@ -4,6 +4,20 @@ const dialog = document.querySelector('#order-dialog');
 const orderItems = [...document.querySelectorAll('.order-item')];
 const total = document.querySelector('#total');
 const whatsapp = document.querySelector('#whatsapp-link');
+const isGerman = document.documentElement.lang === 'de';
+const copy = isGerman ? {
+  empty: 'Mindestens ein Glas wählen',
+  continue: 'Weiter auf WhatsApp <span>↗</span>',
+  intro: 'Hallo Jian! Ich möchte gerne bestellen:',
+  total: 'Total',
+  details: 'Mein Name und meine Lieferadresse sind: '
+} : {
+  empty: 'Choose at least one jar',
+  continue: 'Continue on WhatsApp <span>↗</span>',
+  intro: 'Hello Jian! I would like to order:',
+  total: 'Total',
+  details: 'My name and delivery address are: '
+};
 
 function updateOrder() {
   const selections = orderItems.map(item => {
@@ -19,16 +33,17 @@ function updateOrder() {
     whatsapp.href = '#';
     whatsapp.classList.add('is-disabled');
     whatsapp.setAttribute('aria-disabled', 'true');
-    whatsapp.textContent = 'Choose at least one jar';
+    whatsapp.textContent = copy.empty;
     return;
   }
 
   const lines = selections.map(item => `${item.quantity} × ${item.name} — CHF ${(item.price * item.quantity).toFixed(2)}`);
-  const message = `Hello Jian! I would like to order:\n${lines.join('\n')}\n\nTotal: CHF ${amount.toFixed(2)} before delivery.\nMy name and delivery address are: `;
+  const beforeDelivery = isGerman ? 'vor Lieferung' : 'before delivery';
+  const message = `${copy.intro}\n${lines.join('\n')}\n\n${copy.total}: CHF ${amount.toFixed(2)} ${beforeDelivery}.\n${copy.details}`;
   whatsapp.href = `https://wa.me/41${WHATSAPP_NUMBER.slice(1)}?text=${encodeURIComponent(message)}`;
   whatsapp.classList.remove('is-disabled');
   whatsapp.removeAttribute('aria-disabled');
-  whatsapp.innerHTML = 'Continue on WhatsApp <span>↗</span>';
+  whatsapp.innerHTML = copy.continue;
 }
 
 function openOrder(selectedProduct) {
