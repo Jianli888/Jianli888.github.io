@@ -1,0 +1,86 @@
+.uses {
+  position: relative;
+  overflow: hidden;
+}
+
+.uses::before {
+  content: "SERVE";
+  position: absolute;
+  right: -1.5rem;
+  top: 4.5rem;
+  color: rgba(255, 85, 177, .09);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(8rem, 20vw, 18rem);
+  font-weight: 600;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.uses__intro {
+  position: relative;
+  max-width: 760px;
+  margin-bottom: 72px;
+}
+
+.uses__intro p:last-child {
+  max-width: 620px;
+  margin: 32px 0 0;
+  color: #62545a;
+  font-size: 1.08rem;
+}
+
+.use-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+
+.use-card {
+  min-height: 260px;
+  padding: 26px 22px;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 248, 248, .92);
+}
+
+.use-card:nth-child(2),
+.use-card:nth-child(4) {
+  background: var(--acid);
+}
+
+.use-card__number {
+  color: var(--red);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.use-card h3 {
+  margin: auto 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.use-card p {
+  margin: 0;
+  color: #62545a;
+  font-size: .92rem;
+}
+
+@media (max-width: 900px) {
+  .uses::before { top: 3rem; }
+  .uses__intro { margin-bottom: 48px; }
+  .use-grid { grid-template-columns: 1fr 1fr; }
+  .use-card { min-height: 220px; }
+  .use-card:last-child { grid-column: 1 / -1; min-height: 190px; }
+}
+
+@media (max-width: 520px) {
+  .use-grid { grid-template-columns: 1fr; }
+  .use-card, .use-card:last-child { grid-column: auto; min-height: 180px; }
+}
