@@ -44,7 +44,36 @@
   transform: none;
 }
 
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  margin-right: 22px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.language-switch a {
+  opacity: .55;
+}
+
+.language-switch a:hover,
+.language-switch a[aria-current="page"] {
+  opacity: 1;
+  color: var(--red);
+}
+
+.language-switch span {
+  opacity: .35;
+}
+
 @media (max-width: 900px) {
+  .language-switch {
+    margin-right: 12px;
+  }
+
   .order-item {
     grid-template-columns: 1fr 132px;
     padding: 10px;
@@ -54,3 +83,4 @@
     grid-template-columns: 36px 1fr 36px;
   }
 }
+
