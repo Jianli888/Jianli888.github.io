@@ -19,14 +19,16 @@ const copy = isGerman ? {
   reference: 'Bestellnummer',
   email: 'E-Mail',
   method: 'Übergabe',
-  date: 'Voraussichtliches Datum',
+  deliveryDate: 'Voraussichtliches Lieferdatum',
+  pickupDate: 'Voraussichtliches Abholdatum',
   delivery: 'Lieferung in der Schweiz',
   pickup: 'Abholung in Winterthur',
   deliverySummary: 'Produktetotal: CHF {amount}. Lieferung ab CHF 8.50; der definitive Gesamtbetrag wird auf WhatsApp bestätigt.',
   pickupSummary: 'Gesamtbetrag: CHF {amount}. Abholung in Winterthur ist kostenlos.',
   deliveryTotalLabel: 'Produktetotal · Lieferung ab CHF 8.50',
   pickupTotalLabel: 'Total · kostenlose Abholung',
-  details: 'Mein Name und meine Lieferadresse (falls Lieferung) sind: '
+  deliveryDetails: 'Mein Name und meine Lieferadresse sind: ',
+  pickupDetails: 'Mein Name ist: '
 } : {
   empty: 'Choose at least one jar',
   incomplete: 'Add email and date',
@@ -36,14 +38,16 @@ const copy = isGerman ? {
   reference: 'Order reference',
   email: 'Email',
   method: 'Fulfilment',
-  date: 'Expected date',
+  deliveryDate: 'Expected delivery date',
+  pickupDate: 'Expected pickup date',
   delivery: 'Delivery in Switzerland',
   pickup: 'Pickup in Winterthur',
   deliverySummary: 'Product total: CHF {amount}. Delivery starts at CHF 8.50; the final total will be confirmed on WhatsApp.',
   pickupSummary: 'Total: CHF {amount}. Pickup in Winterthur is free.',
   deliveryTotalLabel: 'Product total · delivery from CHF 8.50',
   pickupTotalLabel: 'Total · free pickup',
-  details: 'My name and delivery address are: '
+  deliveryDetails: 'My name and delivery address are: ',
+  pickupDetails: 'My name is: '
 };
 
 function createOrderId() {
@@ -85,10 +89,12 @@ function updateOrder() {
 
   const lines = selections.map(item => `${item.quantity} × ${item.name} — CHF ${(item.price * item.quantity).toFixed(2)}`);
   const method = fulfilmentInput.value === 'pickup' ? copy.pickup : copy.delivery;
+  const dateLabel = fulfilmentInput.value === 'pickup' ? copy.pickupDate : copy.deliveryDate;
+  const detailsPrompt = fulfilmentInput.value === 'pickup' ? copy.pickupDetails : copy.deliveryDetails;
   const orderId = whatsapp.dataset.orderId || createOrderId();
   whatsapp.dataset.orderId = orderId;
   const priceSummary = (fulfilmentInput.value === 'pickup' ? copy.pickupSummary : copy.deliverySummary).replace('{amount}', amount.toFixed(2));
-  const message = `${copy.intro}\n${lines.join('\n')}\n\n${priceSummary}\n${copy.reference}: ${orderId}\n${copy.email}: ${emailInput.value.trim()}\n${copy.method}: ${method}\n${copy.date}: ${estimatedDateInput.value}\n\n${copy.details}`;
+  const message = `${copy.intro}\n${lines.join('\n')}\n\n${priceSummary}\n${copy.reference}: ${orderId}\n${copy.email}: ${emailInput.value.trim()}\n${copy.method}: ${method}\n${dateLabel}: ${estimatedDateInput.value}\n\n${detailsPrompt}`;
   whatsapp.href = `https://wa.me/41${WHATSAPP_NUMBER.slice(1)}?text=${encodeURIComponent(message)}`;
   whatsapp.classList.remove('is-disabled');
   whatsapp.removeAttribute('aria-disabled');
