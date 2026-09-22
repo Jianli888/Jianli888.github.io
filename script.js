@@ -3,6 +3,7 @@ const WHATSAPP_NUMBER = '0782471688';
 const dialog = document.querySelector('#order-dialog');
 const orderItems = [...document.querySelectorAll('.order-item')];
 const total = document.querySelector('#total');
+const totalLabel = document.querySelector('#order-total-label');
 const whatsapp = document.querySelector('#whatsapp-link');
 const emailInput = document.querySelector('#customer-email');
 const fulfilmentInput = document.querySelector('#fulfilment-method');
@@ -21,6 +22,10 @@ const copy = isGerman ? {
   date: 'Voraussichtliches Datum',
   delivery: 'Lieferung in der Schweiz',
   pickup: 'Abholung in Winterthur',
+  deliverySummary: 'Produktetotal: CHF {amount}. Lieferung ab CHF 8; der definitive Gesamtbetrag wird auf WhatsApp bestätigt.',
+  pickupSummary: 'Gesamtbetrag: CHF {amount}. Abholung in Winterthur ist kostenlos.',
+  deliveryTotalLabel: 'Produktetotal · Lieferung ab CHF 8',
+  pickupTotalLabel: 'Total · kostenlose Abholung',
   details: 'Mein Name und meine Lieferadresse (falls Lieferung) sind: '
 } : {
   empty: 'Choose at least one jar',
@@ -34,6 +39,10 @@ const copy = isGerman ? {
   date: 'Expected date',
   delivery: 'Delivery in Switzerland',
   pickup: 'Pickup in Winterthur',
+  deliverySummary: 'Product total: CHF {amount}. Delivery starts at CHF 8; the final total will be confirmed on WhatsApp.',
+  pickupSummary: 'Total: CHF {amount}. Pickup in Winterthur is free.',
+  deliveryTotalLabel: 'Product total · delivery from CHF 8',
+  pickupTotalLabel: 'Total · free pickup',
   details: 'My name and delivery address are: '
 };
 
@@ -61,6 +70,7 @@ function updateOrder() {
   }).filter(item => item.quantity > 0);
   const amount = selections.reduce((sum, item) => sum + item.price * item.quantity, 0);
   total.textContent = `CHF ${amount.toFixed(2)}`;
+  totalLabel.textContent = fulfilmentInput.value === 'pickup' ? copy.pickupTotalLabel : copy.deliveryTotalLabel;
 
   const emailValid = emailInput.validity.valid && emailInput.value.trim();
   const dateValid = estimatedDateInput.validity.valid && estimatedDateInput.value;
@@ -74,11 +84,11 @@ function updateOrder() {
   }
 
   const lines = selections.map(item => `${item.quantity} × ${item.name} — CHF ${(item.price * item.quantity).toFixed(2)}`);
-  const beforeDelivery = isGerman ? 'vor Lieferung' : 'before delivery';
   const method = fulfilmentInput.value === 'pickup' ? copy.pickup : copy.delivery;
   const orderId = whatsapp.dataset.orderId || createOrderId();
   whatsapp.dataset.orderId = orderId;
-  const message = `${copy.intro}\n${lines.join('\n')}\n\n${copy.total}: CHF ${amount.toFixed(2)} ${beforeDelivery}.\n${copy.reference}: ${orderId}\n${copy.email}: ${emailInput.value.trim()}\n${copy.method}: ${method}\n${copy.date}: ${estimatedDateInput.value}\n\n${copy.details}`;
+  const priceSummary = (fulfilmentInput.value === 'pickup' ? copy.pickupSummary : copy.deliverySummary).replace('{amount}', amount.toFixed(2));
+  const message = `${copy.intro}\n${lines.join('\n')}\n\n${priceSummary}\n${copy.reference}: ${orderId}\n${copy.email}: ${emailInput.value.trim()}\n${copy.method}: ${method}\n${copy.date}: ${estimatedDateInput.value}\n\n${copy.details}`;
   whatsapp.href = `https://wa.me/41${WHATSAPP_NUMBER.slice(1)}?text=${encodeURIComponent(message)}`;
   whatsapp.classList.remove('is-disabled');
   whatsapp.removeAttribute('aria-disabled');

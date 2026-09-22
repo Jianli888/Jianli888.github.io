@@ -78,7 +78,7 @@
         <article class="product-card product-card--featured"><p class="product-card__badge">Am beliebtesten</p><p class="product-card__number">02</p><div class="product-card__size">125<span>g</span></div><h3>The Friend</h3><p>Die passende Grösse für den Alltag, zum Teilen und Entdecken.</p><div class="product-card__footer"><strong>CHF 10.68</strong><button class="text-button js-buy" data-product="The Friend — 125g">Bestellen <span>↗</span></button></div></article>
         <article class="product-card"><p class="product-card__number">03</p><div class="product-card__size">190<span>g</span></div><h3>The Lover</h3><p>Maximaler Geschmack und bester Wert für echte Chili-Liebhaber.</p><div class="product-card__footer"><strong>CHF 15.18</strong><button class="text-button js-buy" data-product="The Lover — 190g">Bestellen <span>↗</span></button></div></article>
       </div>
-      <p class="delivery-note">Abholung in Winterthur · Lieferdetails werden bei der Bestellung bestätigt</p>
+      <p class="delivery-note">Kostenlose Abholung in Winterthur · Lieferung in der Schweiz ab CHF 8</p>
     </section>
 
     <section class="ingredients section" id="ingredients"><div class="ingredients__title"><p class="eyebrow">In jedem Glas</p><h2>Ehrliche Zutaten.<br>Voller Geschmack.</h2></div><ul><li><span>01</span>Frische Chili</li><li><span>02</span>Knoblauch & Ingwer</li><li><span>03</span>Rote Zwiebel</li><li><span>04</span>Rosmarin</li><li><span>05</span>Grünes Sichuan-Pfefferöl</li><li><span>06</span>Sesam- & Olivenöl</li><li><span>07</span>Salz</li></ul></section>
@@ -120,14 +120,14 @@
         <input id="customer-email" name="customer-email" type="email" autocomplete="email" placeholder="du@beispiel.ch" required>
         <label for="fulfilment-method">Wie möchtest du die Bestellung erhalten?</label>
         <select id="fulfilment-method" name="fulfilment-method" required>
-          <option value="delivery">Lieferung in der Schweiz</option>
-          <option value="pickup">Abholung in Winterthur</option>
+          <option value="delivery">Lieferung in der Schweiz — ab CHF 8</option>
+          <option value="pickup">Abholung in Winterthur — kostenlos</option>
         </select>
         <label for="estimated-date">Voraussichtliches Liefer- oder Abholdatum</label>
         <input id="estimated-date" name="estimated-date" type="date" required>
         <p class="field-note">Wähle das erwartete Datum. Jian bestätigt es dir auf WhatsApp.</p>
       </div>
-      <div class="order-total"><span>Total vor Lieferung</span><strong id="total">CHF 0.00</strong></div>
+      <div class="order-total"><span id="order-total-label">Produktetotal · Lieferung ab CHF 8</span><strong id="total">CHF 0.00</strong></div>
       <a class="button button--full whatsapp-link is-disabled" id="whatsapp-link" href="#" target="_blank" rel="noopener" aria-disabled="true" style="text-decoration:none;margin-top:0">Mindestens ein Glas wählen</a>
       <p class="payment-note">WhatsApp öffnet sich mit allen Bestelldetails. Verfügbarkeit, Lieferung oder Abholung und Bezahlung bestätigen wir im Chat.</p>
       <div class="order-confirm-step" id="order-confirm-step" hidden>
