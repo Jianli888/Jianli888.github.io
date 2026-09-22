@@ -32,6 +32,17 @@
   <link rel="stylesheet" href="../uses.css">
   <link rel="stylesheet" href="../marquee.css">
   <script src="../script.js" defer></script>
+  <!-- BEGIN Google Merchant store widget -->
+  <script id="merchantWidgetScript" src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
+  <script>
+    document.getElementById('merchantWidgetScript').addEventListener('load', function () {
+      merchantwidget.start({
+        merchant_id: 5854448641,
+        position: 'RIGHT_BOTTOM'
+      });
+    });
+  </script>
+  <!-- END Google Merchant store widget -->
 </head>
 <body>
   <header class="site-header">
