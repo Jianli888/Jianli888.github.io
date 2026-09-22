@@ -4,20 +4,53 @@ const dialog = document.querySelector('#order-dialog');
 const orderItems = [...document.querySelectorAll('.order-item')];
 const total = document.querySelector('#total');
 const whatsapp = document.querySelector('#whatsapp-link');
+const emailInput = document.querySelector('#customer-email');
+const fulfilmentInput = document.querySelector('#fulfilment-method');
+const estimatedDateInput = document.querySelector('#estimated-date');
+const confirmStep = document.querySelector('#order-confirm-step');
 const isGerman = document.documentElement.lang === 'de';
 const copy = isGerman ? {
   empty: 'Mindestens ein Glas wählen',
+  incomplete: 'E-Mail und Datum ergänzen',
   continue: 'Weiter auf WhatsApp <span>↗</span>',
   intro: 'Hallo Jian! Ich möchte gerne bestellen:',
   total: 'Total',
-  details: 'Mein Name und meine Lieferadresse sind: '
+  reference: 'Bestellnummer',
+  email: 'E-Mail',
+  method: 'Übergabe',
+  date: 'Voraussichtliches Datum',
+  delivery: 'Lieferung in der Schweiz',
+  pickup: 'Abholung in Winterthur',
+  details: 'Mein Name und meine Lieferadresse (falls Lieferung) sind: '
 } : {
   empty: 'Choose at least one jar',
+  incomplete: 'Add email and date',
   continue: 'Continue on WhatsApp <span>↗</span>',
   intro: 'Hello Jian! I would like to order:',
   total: 'Total',
+  reference: 'Order reference',
+  email: 'Email',
+  method: 'Fulfilment',
+  date: 'Expected date',
+  delivery: 'Delivery in Switzerland',
+  pickup: 'Pickup in Winterthur',
   details: 'My name and delivery address are: '
 };
+
+function createOrderId() {
+  const date = new Date().toISOString().slice(0, 10).replaceAll('-', '');
+  const bytes = new Uint32Array(1);
+  crypto.getRandomValues(bytes);
+  return `JC-${date}-${bytes[0].toString(36).toUpperCase().slice(0, 6).padStart(6, '0')}`;
+}
+
+function setDefaultDate() {
+  const earliest = new Date();
+  earliest.setDate(earliest.getDate() + 2);
+  const value = earliest.toISOString().slice(0, 10);
+  estimatedDateInput.min = value;
+  if (!estimatedDateInput.value) estimatedDateInput.value = value;
+}
 
 function updateOrder() {
   const selections = orderItems.map(item => {
@@ -29,17 +62,23 @@ function updateOrder() {
   const amount = selections.reduce((sum, item) => sum + item.price * item.quantity, 0);
   total.textContent = `CHF ${amount.toFixed(2)}`;
 
-  if (!selections.length) {
+  const emailValid = emailInput.validity.valid && emailInput.value.trim();
+  const dateValid = estimatedDateInput.validity.valid && estimatedDateInput.value;
+
+  if (!selections.length || !emailValid || !dateValid) {
     whatsapp.href = '#';
     whatsapp.classList.add('is-disabled');
     whatsapp.setAttribute('aria-disabled', 'true');
-    whatsapp.textContent = copy.empty;
+    whatsapp.textContent = selections.length ? copy.incomplete : copy.empty;
     return;
   }
 
   const lines = selections.map(item => `${item.quantity} × ${item.name} — CHF ${(item.price * item.quantity).toFixed(2)}`);
   const beforeDelivery = isGerman ? 'vor Lieferung' : 'before delivery';
-  const message = `${copy.intro}\n${lines.join('\n')}\n\n${copy.total}: CHF ${amount.toFixed(2)} ${beforeDelivery}.\n${copy.details}`;
+  const method = fulfilmentInput.value === 'pickup' ? copy.pickup : copy.delivery;
+  const orderId = whatsapp.dataset.orderId || createOrderId();
+  whatsapp.dataset.orderId = orderId;
+  const message = `${copy.intro}\n${lines.join('\n')}\n\n${copy.total}: CHF ${amount.toFixed(2)} ${beforeDelivery}.\n${copy.reference}: ${orderId}\n${copy.email}: ${emailInput.value.trim()}\n${copy.method}: ${method}\n${copy.date}: ${estimatedDateInput.value}\n\n${copy.details}`;
   whatsapp.href = `https://wa.me/41${WHATSAPP_NUMBER.slice(1)}?text=${encodeURIComponent(message)}`;
   whatsapp.classList.remove('is-disabled');
   whatsapp.removeAttribute('aria-disabled');
@@ -65,4 +104,23 @@ orderItems.forEach(item => {
   item.querySelector('[data-action="minus"]').addEventListener('click', () => { input.value = Math.max(0, Number(input.value) - 1); updateOrder(); });
   item.querySelector('[data-action="plus"]').addEventListener('click', () => { input.value = Math.min(20, Number(input.value) + 1); updateOrder(); });
 });
+[emailInput, fulfilmentInput, estimatedDateInput].forEach(input => input.addEventListener('input', updateOrder));
+whatsapp.addEventListener('click', event => {
+  if (whatsapp.classList.contains('is-disabled')) {
+    event.preventDefault();
+    return;
+  }
+  const order = {
+    orderId: whatsapp.dataset.orderId,
+    email: emailInput.value.trim(),
+    country: 'CH',
+    estimatedDeliveryDate: estimatedDateInput.value,
+    fulfilment: fulfilmentInput.value,
+    language: isGerman ? 'de' : 'en',
+    createdAt: new Date().toISOString()
+  };
+  sessionStorage.setItem('jiansChiliConfirmedOrder', JSON.stringify(order));
+  confirmStep.hidden = false;
+});
+setDefaultDate();
 updateOrder();

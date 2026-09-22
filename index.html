@@ -223,9 +223,26 @@
           <div class="quantity-control"><button type="button" data-action="minus" aria-label="Decrease 190g quantity">−</button><input name="quantity-190" type="number" min="0" max="20" value="0" aria-label="190g jar quantity"><button type="button" data-action="plus" aria-label="Increase 190g quantity">+</button></div>
         </div>
       </div>
+      <div class="order-customer-fields">
+        <label for="customer-email">Email for your order confirmation</label>
+        <input id="customer-email" name="customer-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <label for="fulfilment-method">How would you like to receive it?</label>
+        <select id="fulfilment-method" name="fulfilment-method" required>
+          <option value="delivery">Delivery in Switzerland</option>
+          <option value="pickup">Pickup in Winterthur</option>
+        </select>
+        <label for="estimated-date">Expected delivery or pickup date</label>
+        <input id="estimated-date" name="estimated-date" type="date" required>
+        <p class="field-note">Choose the date you expect. Jian will confirm it with you on WhatsApp.</p>
+      </div>
       <div class="order-total"><span>Total before delivery</span><strong id="total">CHF 0.00</strong></div>
       <a class="button button--full whatsapp-link is-disabled" id="whatsapp-link" href="#" target="_blank" rel="noopener" aria-disabled="true" style="text-decoration:none;margin-top:0">Choose at least one jar</a>
       <p class="payment-note">WhatsApp will open with your order details ready to send. We’ll confirm availability, delivery or pickup, and payment with you in the chat.</p>
+      <div class="order-confirm-step" id="order-confirm-step" hidden>
+        <strong>Did Jian confirm your order in WhatsApp?</strong>
+        <p>Continue only after the products, date and payment have been agreed.</p>
+        <a class="text-link" href="/order-confirmation/" id="confirm-order-link">Yes, my order is confirmed →</a>
+      </div>
     </form>
   </dialog>
 </body>

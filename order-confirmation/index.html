@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order confirmed — Jian’s Chili</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#ff4ca6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../confirmation.css">
+  <script src="../confirmation.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Jian’s Chili home"><img src="../assets/jians-chili-logo.png" alt="Jian’s Chili" width="72" height="72"></a>
+    <a class="button button--small" href="/">Back to home</a>
+  </header>
+  <main class="confirmation-page">
+    <section class="confirmation-card" id="confirmation-card" hidden>
+      <p class="eyebrow" id="confirmation-eyebrow">Order confirmed</p>
+      <h1 id="confirmation-title">Thank you!</h1>
+      <p class="confirmation-lead" id="confirmation-message">Your order has been confirmed with Jian on WhatsApp.</p>
+      <dl>
+        <div><dt id="reference-label">Order reference</dt><dd id="order-reference"></dd></div>
+        <div><dt id="date-label">Expected date</dt><dd id="order-date"></dd></div>
+      </dl>
+      <p class="confirmation-note" id="survey-note">Google may ask whether you would like to receive a short customer review survey after your order.</p>
+    </section>
+    <section class="confirmation-card confirmation-error" id="confirmation-error" hidden>
+      <p class="eyebrow">Order details unavailable</p>
+      <h1>Let’s try again.</h1>
+      <p>This confirmation page must be opened from the order window after your WhatsApp order is confirmed.</p>
+      <a class="button" href="/">Return to the shop</a>
+    </section>
+  </main>
+</body>
+</html>
