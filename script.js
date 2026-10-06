@@ -23,9 +23,9 @@ const copy = isGerman ? {
   pickupDate: 'Voraussichtliches Abholdatum',
   delivery: 'Lieferung in der Schweiz',
   pickup: 'Abholung in Winterthur',
-  deliverySummary: 'Produktetotal: CHF {amount}. Lieferung ab CHF 8.50; der definitive Gesamtbetrag wird auf WhatsApp bestätigt.',
+  deliverySummary: 'Produktetotal: CHF {amount}. Lieferung ab CHF 9; der definitive Gesamtbetrag wird auf WhatsApp bestätigt.',
   pickupSummary: 'Gesamtbetrag: CHF {amount}. Abholung in Winterthur ist kostenlos.',
-  deliveryTotalLabel: 'Produktetotal · Lieferung ab CHF 8.50',
+  deliveryTotalLabel: 'Produktetotal · Lieferung ab CHF 9',
   pickupTotalLabel: 'Total · kostenlose Abholung',
   deliveryDetails: 'Mein Name und meine Lieferadresse sind: ',
   pickupDetails: 'Mein Name ist: '
@@ -42,9 +42,9 @@ const copy = isGerman ? {
   pickupDate: 'Expected pickup date',
   delivery: 'Delivery in Switzerland',
   pickup: 'Pickup in Winterthur',
-  deliverySummary: 'Product total: CHF {amount}. Delivery starts at CHF 8.50; the final total will be confirmed on WhatsApp.',
+  deliverySummary: 'Product total: CHF {amount}. Delivery starts at CHF 9; the final total will be confirmed on WhatsApp.',
   pickupSummary: 'Total: CHF {amount}. Pickup in Winterthur is free.',
-  deliveryTotalLabel: 'Product total · delivery from CHF 8.50',
+  deliveryTotalLabel: 'Product total · delivery from CHF 9',
   pickupTotalLabel: 'Total · free pickup',
   deliveryDetails: 'My name and delivery address are: ',
   pickupDetails: 'My name is: '
